@@ -1,8 +1,11 @@
 #ifndef MIN_ALLOC_H
 #define MIN_ALLOC_H
+#include <stdio.h>
+
+typedef char ALIGN[16];
 
 /*
-    Structure: header_t
+    Union: header
 
     Description:
     This structure represents a header for managing memory blocks in a custom
@@ -16,15 +19,19 @@
    or allocated (0).
     - struct header_t *next: A pointer to the next memory block in the linked
    list.
+    - ALIGN stub: char[16] array.
 
     Usage:
     - This structure is typically used in conjunction with memory allocation
    functions to keep track of allocated memory blocks.
 */
-struct header_t {
-  size_t size;
-  unsigned is_free;
-  struct header_t *next;
+union header {
+  struct {
+    size_t size;
+    unsigned is_free;
+    union header *next;
+  } s;
+  ALIGN stub;
 } typedef header_t;
 
 /*
@@ -41,6 +48,7 @@ struct header_t {
     Return:
     - void *: A pointer to the beginning of the allocated memory block.
 */
+
 void *min_alloc(size_t size);
 
 /*
