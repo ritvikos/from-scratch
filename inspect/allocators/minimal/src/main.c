@@ -1,4 +1,4 @@
-#include "min_alloc.h"
+#include "../include/min_alloc.h"
 #include <stdio.h>
 
 int main() {

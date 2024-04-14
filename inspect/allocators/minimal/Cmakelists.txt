@@ -1,0 +1,15 @@
+set(PROJECT "min_alloc")
+set(CMAKE_C_COMPILER clang)
+
+cmake_minimum_required(VERSION 3.5)
+project(${PROJECT} VERSION 0.0.1)
+
+add_library(
+	sources
+	src/min_alloc.c
+	include/min_alloc.h
+)
+
+add_executable(${PROJECT} src/main.c)
+target_link_libraries(${PROJECT} PRIVATE sources)
+target_include_directories(${PROJECT} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
