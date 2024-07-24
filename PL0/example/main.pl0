@@ -1,0 +1,24 @@
+const max = 10;
+var x, y;
+
+procedure gcd;
+var a, b;
+begin
+  a := x;
+  b := y;
+  while b # 0 do
+  begin
+    if a > b then
+      a := a - b;
+    else
+      b := b - a
+  end;
+  x := a
+end;
+
+begin
+  x := max;
+  y := 20;
+  call gcd;
+  ! x
+end.
