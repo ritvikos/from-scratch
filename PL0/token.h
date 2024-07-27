@@ -10,6 +10,7 @@ typedef enum {
   TOKEN_BEGIN,
   TOKEN_END,
   TOKEN_IF,
+  TOKEN_ELSE,
   TOKEN_THEN,
   TOKEN_WHILE,
   TOKEN_DO,
@@ -26,6 +27,7 @@ typedef enum {
   TOKEN_LESS_EQUAL,
   TOKEN_GREATER,
   TOKEN_GREATER_EQUAL,
+  TOKEN_WRITE,
 
   // Punctuation
   TOKEN_COMMA,
