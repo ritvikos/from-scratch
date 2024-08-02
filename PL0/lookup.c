@@ -1,7 +1,7 @@
-#include "lookup.h"
+#include "includes/lookup.h"
 #include "ctype.h"
-#include "lex.h"
-#include "token.h"
+#include "includes/lex.h"
+#include "includes/token.h"
 #include "utils.c"
 
 Token lookupKeywordIdentifier(Lexer *lexer) {

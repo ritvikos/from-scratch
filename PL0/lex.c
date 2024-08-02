@@ -1,10 +1,9 @@
-#include "lex.h"
+#include "includes/lex.h"
 #include "lookup.c"
-#include "token.h"
+#include "includes/token.h"
 #include <corecrt.h>
 #include <ctype.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 

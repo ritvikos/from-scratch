@@ -1,8 +1,8 @@
 #include "file.c"
 #include "lex.c"
-#include "lex.h"
+#include "includes/lex.h"
 #include "token.c"
-#include "token.h"
+#include "includes/token.h"
 #include <stdio.h>
 
 // PL/0 Compiler from scratch in C
