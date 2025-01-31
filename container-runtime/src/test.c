@@ -46,15 +46,15 @@ void test_sys_cfg() {
   printf("PID: %ld\n", (long)getpid());
 }
 
-void print_child_cfg() {
+void print_container_config() {
   printf("\n-- SYS --\n");
   test_sys_cfg();
 
-  printf("\n-- FS --\n");
-  test_fs_cfg();
+  // printf("\n-- FS --\n");
+  // test_fs_cfg();
 
-  printf("\n-- PROC --\n");
-  test_proc_cfg();
+  // printf("\n-- PROC --\n");
+  // test_proc_cfg();
 
   printf("\n-- USER NS --\n");
   test_user_cfg();

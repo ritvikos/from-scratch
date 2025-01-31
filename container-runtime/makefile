@@ -1,18 +1,24 @@
-CC = clang
-CFLAGS = -Wall
+CC ?= gcc
+CFLAGS ?= -Wall -Wextra -g -Iinclude
+LDFLAGS ?=
 
-BASE = $(CC) $(CFLAGS)
-BUILD = -o main main.c test.c
-FMT = clang-format
+SRC_DIR ?= src
+OBJ_DIR ?= obj
+BIN_DIR ?= bin
 
-build:
-	$(BASE) ${BUILD}
+SRC = $(wildcard $(SRC_DIR)/*.c)
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+BIN = $(BIN_DIR)/main
 
-run:
-	$(BASE) $(BUILD) && ./main run ls
+all: $(BIN)
 
-format:
-	$(FMT) -i main.c
+$(BIN): $(OBJ)
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) $(OBJ) -o $@ $(LDFLAGS)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f main
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
