@@ -1,0 +1,111 @@
+1. Clone the Linux kernel.
+
+   ```sh
+   git clone https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux
+   ```
+
+   | I thought it would be faster to download from google rather than github —less traffic, maybe? Who knows? :p
+
+2. Copy the source code (optional, to avoid re-downloading if something is misconfigured badly).
+
+   ```sh
+   mv linux linux-base
+   cp -r linux-base linux
+   cd linux
+   ```
+
+3. Uncomment the `deb-src` lines and update package lists.
+
+   ```sh
+   vim /etc/apt/sources.list
+   sudo apt update
+   ```
+
+   On Ubuntu, edit `/etc/apt/sources.list.d/ubuntu.sources` instead:
+
+   ```sh
+   vim /etc/apt/sources.list.d/ubuntu.sources
+   ```
+
+4. Enable source repositories (if missing).
+
+   ```sh
+   vi /etc/apt/sources.list.d/ubuntu.sources
+   ```
+
+   Add the following if it's missing:
+
+   ```
+   Types: deb deb-src
+   URIs: http://archive.ubuntu.com/ubuntu
+   Suites: noble noble-updates noble-security
+   Components: main restricted universe multiverse
+   ```
+
+   Update package lists and install kernel build deps:
+
+   ```sh
+   sudo apt update
+   sudo apt build-dep linux
+   ```
+
+5. Install additional deps.
+
+   ```sh
+   sudo apt install libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf llvm
+   ```
+
+6. Use the current kernel's configuration as a starting point.
+
+   ```sh
+   cat /boot/config-$(uname -r) > .config
+   ```
+
+7. Configure the kernel using `menuconfig`.
+
+   ```sh
+   make menuconfig
+   ```
+
+   - Navigate to **General setup →**
+   - Select **<Save>** to save the configuration.
+   - Select **<Exit>**.
+
+   **Remove Debian-specific configurations:**
+
+   - Go to **Cryptographic API** → **Certificates for signature checking**.
+   - Remove `debian/canonical-certs.pem` from:
+     ```
+     (debian/canonical-certs.pem) Additional X.509 keys for default system keyring
+     ```
+     Change it to:
+     ```
+     () Additional X.509 keys for default system keyring
+     ```
+   - Remove `debian/canonical-revoked-certs.pem` from:
+
+     ```
+     (debian/canonical-revoked-certs.pem) X.509 certificates to be preloaded into the system blacklist keyring
+     ```
+
+     Change it to:
+
+     ```
+     () X.509 certificates to be preloaded into the system blacklist keyring
+     ```
+
+   - **Save** and **Exit**.
+
+8. Build the kernel.
+
+   ```sh
+   make -j$(nproc)
+   ```
+
+   - `-j$(nproc)`: Uses all CPU cores for faster compilation.
+
+   Install stripped kernel modules:
+
+   ```sh
+   sudo make INSTALL_MOD_STRIP=1 modules_install
+   ```
