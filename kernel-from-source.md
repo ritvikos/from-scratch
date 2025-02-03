@@ -1,3 +1,29 @@
+## Run the VM
+1. Run with Qemu. (keep inline, new lines does not work in windows terminal)
+   - Create virtual disk - 'qcow2', 'raw' or other format supported by Qemu (35 GB atleast).
+
+   ```sh
+   qemu-system-x86_64
+   -accel whpx
+   -drive file='Ubuntu Server.qcow2,format=qcow2',if=virtio,discard=unmap
+   -cdrom ubuntu-server.iso
+   -m 8G
+   -smp 10
+   -netdev user,id=net0,hostfwd=tcp::2222-:22
+   -device virtio-net,netdev=net0
+   -vga virtio
+   -boot order=c
+   -nographic
+   -monitor telnet:127.0.0.1:4444,server,nowait
+   ```
+
+2. SSH into the VM. (enable SSH via optional-features)
+
+   ```sh
+   ssh -p 2222 username@localhost
+   ```
+
+## Setup Linux Kernel
 1. Clone the Linux kernel.
 
    ```sh
@@ -108,4 +134,13 @@
 
    ```sh
    sudo make INSTALL_MOD_STRIP=1 modules_install
+   ```
+
+9. Buildroot (optional)
+   - Create 'ext2' image with buildroot.
+
+10. Run the kernel in VM.
+
+   ```sh
+   qemu-system-x86_64 -kernel linux/arch/x86/boot/bzImage -drive file=buildroot/output/images/rootfs.ext2,format=raw -append "root=/dev/sda console=ttyS0" -nographic -no-reboot
    ```
