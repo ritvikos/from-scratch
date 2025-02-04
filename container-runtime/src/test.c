@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "test.h"
+#include "../include/test.h"
 
 void test_fs_cfg() {
   if (mkdir("/mnt/testfs", 0755) == -1) {

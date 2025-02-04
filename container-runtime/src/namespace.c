@@ -2,10 +2,9 @@
 
 #include <sched.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 
-#include "namespace.h"
+#include "../include/namespace.h"
 
 int namespace_create() {
   int flags =

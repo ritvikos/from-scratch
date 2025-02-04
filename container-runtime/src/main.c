@@ -16,9 +16,8 @@
 
 #include <stdio.h>
 
-#include "container.h"
-#include "process.h"
-#include "test.h"
+#include "../include/container.h"
+#include "../include/process.h"
 
 int main(int argc, char *argv[]) {
   struct container container = {.hostname = "minimal-container",
