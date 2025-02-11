@@ -5,8 +5,8 @@
 #include "process.h"
 
 struct container {
-  char *hostname;
-  struct container_process proc;
+	char *hostname;
+	struct container_process proc;
 };
 
 int container_create(struct container *container);
