@@ -10,6 +10,7 @@
 #include <sys/wait.h>
 
 #include "../include/process.h"
+#include "../include/namespace.h"
 
 int process_create(struct container_process *proc, int (*child)(void *),
 		   void *container)
@@ -22,8 +23,9 @@ int process_create(struct container_process *proc, int (*child)(void *),
 		return -1;
 	}
 
+	int flags = namespace_flags();
 	proc->pid = clone(child, proc->stack + STACK_SIZE - sizeof(void *),
-			  SIGCHLD, container);
+			  flags | SIGCHLD, container);
 
 	if (proc->pid == -1) {
 		fprintf(stderr, "Error: Process Creation!");

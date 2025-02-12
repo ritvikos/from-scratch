@@ -8,13 +8,9 @@
 #include "../include/container.h"
 #include "../include/process.h"
 
-int containerize(void *c)
+int init(void *c)
 {
 	struct container *container = (struct container *)c;
-
-	if (namespace_create() < 0) {
-		return -1;
-	}
 
 	if (sethostname(container->hostname, strlen(container->hostname)) < 0) {
 		fprintf(stderr, "Error: Set Hostname!");
@@ -37,7 +33,7 @@ int container_create(struct container *container)
 {
 	struct container_process *proc = &container->proc;
 
-	if (process_create(proc, containerize, container) < 0) {
+	if (process_create(proc, init, container) < 0) {
 		return -1;
 	}
 

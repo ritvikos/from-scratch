@@ -10,5 +10,6 @@ struct container_ns {
 };
 
 int namespace_create();
+int namespace_flags();
 
 #endif

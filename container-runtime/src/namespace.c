@@ -8,8 +8,8 @@
 
 int namespace_create()
 {
-	int flags = CLONE_NEWUTS | CLONE_NEWPID | CLONE_NEWNS | CLONE_NEWUSER |
-		    CLONE_NEWIPC;
+	int flags = CLONE_NEWUTS | CLONE_NEWPID | CLONE_NEWNS | CLONE_NEWIPC |
+		    CLONE_NEWCGROUP;
 
 	if (unshare(flags) == -1) {
 		fprintf(stderr, "Unshare failed!");
@@ -17,4 +17,10 @@ int namespace_create()
 	}
 
 	return 0;
+}
+
+int namespace_flags()
+{
+	return CLONE_NEWUTS | CLONE_NEWPID | CLONE_NEWNS | CLONE_NEWIPC |
+	       CLONE_NEWCGROUP;
 }
